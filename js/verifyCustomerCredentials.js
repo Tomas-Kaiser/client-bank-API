@@ -1,31 +1,54 @@
-function verifyCustomerCredentials() {
-   const email = document.querySelector("#email").value;
-   const password = document.querySelector("#password").value;
-   const errCredentials = document.querySelector("#incorret-credentials");
+const loginForm = document.querySelector("#loginForm");
+
+loginForm.addEventListener("submit", function (e) {
+   e.preventDefault();
+
+   const email = loginForm.querySelector("#loginEmail").value;
+   const password = loginForm.querySelector("#loginPassword").value;
+   const errCredentials = loginForm.querySelector("#incorrect-credentials");
+
 
    if (email == "" || password == "") {
       console.log("email or passwrod is empty!");
       errCredentials.style.display = "block";
+      setTimeout(function () {
+         loginForm.querySelector("#loginEmail").value = "";
+         loginForm.querySelector("#loginPassword").value = "";
+      }, 1000);
+      setTimeout(function () {
+         errCredentials.style.display = "none";
+      }, 3000);
       return;
    }
 
    const url = `http://localhost:49000/api/customers/${email}/${password}`;
 
-   console.log(url);
-
    fetch(url)
       .then(res => res.json())
       .then(jsonRes => {
          if (errCredentials.style.display === "block") { errCredentials.style.display = "none"; }
-         const containerWelcome = document.querySelector("#container-welcome");
-         containerWelcome.remove();
+         document.querySelector("#container-login").remove();
+         document.querySelector("#container-signup").remove();
+         document.querySelector("h1").remove();
+         console.log(jsonRes);
+         console.log(jsonRes.accounts.length);
 
-         getCustomerDashboard(jsonRes);
+         getCustomerDashboard(jsonRes, email, password);
 
       })
       .catch(err => {
          console.log('Some error happen', err),
             console.log("Email or password is incorrect"),
             errCredentials.style.display = "block";
+
+         setTimeout(function () {
+            loginForm.querySelector("#loginEmail").value = "";
+            loginForm.querySelector("#loginPassword").value = "";
+         }, 1000);
+
+         setTimeout(function () {
+            errCredentials.style.display = "none";
+         }, 3000);
       })
-}
+
+});
