@@ -1,4 +1,4 @@
-function modal(btnClicked) {
+function modal(btnClicked, jsonRes, clickedCardNum) {
    console.log("Modal btn: ");
    console.log(btnClicked);
 
@@ -25,6 +25,41 @@ function modal(btnClicked) {
          </div>
       </div>
       `);
+   } else if (btnClicked === "transactions") {
+      const divModalContent = document.createElement("div");
+      divModalContent.setAttribute("class", "modal-content");
+
+      divModal.appendChild(divModalContent);
+
+      const divModalHeader = document.createElement("div");
+      divModalHeader.setAttribute("class", "modal-header");
+      divModalHeader.innerHTML = (`
+         <span class="close">X</span>
+         <h2>${btnClicked}</h2>
+      `);
+
+      divModalContent.appendChild(divModalHeader);
+
+      const divModalBody = document.createElement("div");
+      divModalBody.setAttribute("class", "modal-body");
+      divModalContent.appendChild(divModalBody);
+
+      
+      for (i = 0; i < jsonRes.accounts[clickedCardNum].transactions.length; i++){
+         const divContentBody = document.createElement("div");
+
+
+         divContentBody.innerHTML = (`
+         <p>Date: ${jsonRes.accounts[clickedCardNum].transactions[i].created}</p>
+         <p>Description: ${jsonRes.accounts[clickedCardNum].transactions[i].description}</p>
+         <p>******************************</p>
+      `);
+
+      divModalContent.appendChild(divContentBody);
+      }
+
+
+
    } else {
       divModal.innerHTML = (`
       <div class="modal-content">

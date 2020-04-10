@@ -54,6 +54,7 @@ function getCustomerDashboard(jsonRes, email, password) {
    root.appendChild(divCardContainer);
    const cardContainer = document.querySelector("#card-container");
 
+   let numOfTheBankCard = 0;
    for (let i = 0; i < jsonRes.accounts.length; i++) {
       let bankCard = document.createElement("div");
       bankCard.setAttribute("class", "card");
@@ -63,6 +64,7 @@ function getCustomerDashboard(jsonRes, email, password) {
             <h4>${jsonRes.accounts[i].currentAcc ? "Current" : "Saving"} account</h4>
          </header>
          <div>
+            <p style="display:none">Num: <span class="num">${numOfTheBankCard++}</p>         
             <p>Account number: <span class="account-number">${jsonRes.accounts[i].accountNumber}</span></p>
             <p>Current balance: <span class="balance">${jsonRes.accounts[i].currentBalance}</span></p>
             <p>Current transactions: <span class="transactions">${jsonRes.accounts[i].transactions == null ? 0 : jsonRes.accounts[i].transactions.length}</span></p>
@@ -71,6 +73,7 @@ function getCustomerDashboard(jsonRes, email, password) {
             <button value="lodgement">Lodgement</button>
             <button value="withdrawal">Withdrawal</button>
             <button value="transfer">Transfer</button>
+            <button value="transactions">All Transactions</button>
             <button class="delete" value="delete">Delete</button>
          </div>
       `);
@@ -78,17 +81,16 @@ function getCustomerDashboard(jsonRes, email, password) {
       cardContainer.appendChild(bankCard);
    }
 
-
-
    let cardContainerClickEvent = cardContainer;
    cardContainerClickEvent.addEventListener("click", accountOperation, false);
 
    function accountOperation(e) {
       if (e.target !== e.currentTarget) {
-         let selectAccountNumber = e.target.parentNode.parentNode.querySelector("div p span");
+         let selectAccountNumber = e.target.parentNode.parentNode.querySelector("div .account-number");
          let accountNumber = selectAccountNumber.textContent;
          let balance = e.target.parentNode.parentNode.querySelector("div .balance");
          let transactions = e.target.parentNode.parentNode.querySelector("div .transactions");
+         let clickedCardNum = e.target.parentNode.parentNode.querySelector("div .num");
          let selectCard = e.target.parentNode.parentNode;
 
          let btnClicked = e.target.value;
@@ -104,6 +106,9 @@ function getCustomerDashboard(jsonRes, email, password) {
             case "transfer":
                modal(btnClicked);
                break;
+            case "transactions":
+               modal(btnClicked, jsonRes, clickedCardNum.textContent);
+               break;
             case "delete":
                deleteAccount(email, password, accountNumber, selectCard);
                console.log("Call delete()");
@@ -117,7 +122,7 @@ function getCustomerDashboard(jsonRes, email, password) {
                const modal = document.getElementById("myModal");
                const amount = document.querySelector("#amount").value;
                let accountReceiver;
-               if(btnClicked === "transfer"){
+               if (btnClicked === "transfer") {
                   accountReceiver = document.querySelector("#accountReceiver").value;
                }
                modal.remove();
@@ -172,8 +177,10 @@ function getCustomerDashboard(jsonRes, email, password) {
          console.log(jsonRes);
          const accNum = document.querySelector("#accountNumber");
          accNum.textContent++;
-         addAccount(jsonRes, cardContainer);
-
+         
+  
+         addAccount(jsonRes, cardContainer, numOfTheBankCard);
+         numOfTheBankCard++;
       }));
    });
 }
