@@ -12,7 +12,7 @@ function getCustomerDashboard(jsonRes, email, password) {
 
    list.innerHTML = (`
       <li>Address: ${jsonRes.address}</li>
-      <li>You have currently ${jsonRes.accounts.length} account${jsonRes.accounts.length === 1 ? "" : "s"} open</li>
+      <li>You have currently <span id="accountNumber">${jsonRes.accounts.length}</span> account${jsonRes.accounts.length === 1 ? "" : "s"} open</li>
    `);
 
    const headerAccount = document.createElement("h3");
@@ -81,9 +81,9 @@ function getCustomerDashboard(jsonRes, email, password) {
 
 
    let cardContainerClickEvent = cardContainer;
-   cardContainerClickEvent.addEventListener("click", doSomething, false);
+   cardContainerClickEvent.addEventListener("click", accountOperation, false);
 
-   function doSomething(e) {
+   function accountOperation(e) {
       if (e.target !== e.currentTarget) {
          let selectAccountNumber = e.target.parentNode.parentNode.querySelector("div p span");
          let accountNumber = selectAccountNumber.textContent;
@@ -165,6 +165,8 @@ function getCustomerDashboard(jsonRes, email, password) {
       }).then(res => res.json().then(jsonRes => {
          console.log("Account created");
          console.log(jsonRes);
+         const accNum = document.querySelector("#accountNumber");
+         accNum.textContent++;
          addAccount(jsonRes, cardContainer);
 
       }));
@@ -200,5 +202,8 @@ function deleteAccount(email, password, accountNumber, selectCard) {
    }).then(res => res.text().then(text => {
       console.log(text);
       selectCard.remove();
+
+      const accNum = document.querySelector("#accountNumber");
+      accNum.textContent--;
    }));
 }
