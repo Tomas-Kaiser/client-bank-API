@@ -116,6 +116,10 @@ function getCustomerDashboard(jsonRes, email, password) {
                e.preventDefault();
                const modal = document.getElementById("myModal");
                const amount = document.querySelector("#amount").value;
+               let accountReceiver;
+               if(btnClicked === "transfer"){
+                  accountReceiver = document.querySelector("#accountReceiver").value;
+               }
                modal.remove();
 
                console.log("Modal - amount: " + amount);
@@ -128,6 +132,7 @@ function getCustomerDashboard(jsonRes, email, password) {
                      break;
                   case "transfer":
                      // call fetch
+                     transfer(btnClicked, email, password, accountNumber, accountReceiver, amount, balance, transactions);
                      console.log("Call transfer()");
                      break;
                }
@@ -205,5 +210,20 @@ function deleteAccount(email, password, accountNumber, selectCard) {
 
       const accNum = document.querySelector("#accountNumber");
       accNum.textContent--;
+   }));
+}
+
+function transfer(type, email, password, accountNumber, accountReceiver, amount, balance, transactions) {
+   fetch(`http://localhost:49000/api/customers/${email}/${password}/accounts/${accountNumber}/${type}/${accountReceiver}/${amount}`, {
+      headers: {
+         "Accept": "application/json",
+         "Accept": "text/plain",
+         "Content-Type": "application/json"
+      },
+      method: "GET",
+   }).then(res => res.json().then(jsonRes => {
+      console.log(jsonRes)
+      balance.textContent = `${balance.textContent - amount}`;
+      transactions.textContent++;
    }));
 }

@@ -6,23 +6,45 @@ function modal(btnClicked) {
    divModal.setAttribute("id", "myModal");
    divModal.setAttribute("class", "modal");
 
-   divModal.innerHTML = (`
-   <div class="modal-content">
-      <div class="modal-header">
-         <span class="close">&times;</span>
-         <h2>${btnClicked}</h2>
+   if (btnClicked === "transfer") {
+      divModal.innerHTML = (`
+      <div class="modal-content">
+         <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>${btnClicked}</h2>
+         </div>
+         <div class="modal-body">
+            <form id="amountForm">
+               <input type="text" id="amount" name="amount" placeholder="Amount"><br><br>
+               <input type="text" id="accountReceiver" name="account" placeholder="Account number"><br><br>
+               <button>Submit</button>
+            </form> 
+         </div>
+         <div class="modal-footer">
+            <h3>Modal Footer</h3>
+         </div>
       </div>
-      <div class="modal-body">
-         <form id="amountForm">
-            <input type="text" id="amount" name="amount" placeholder="Amount"><br><br>
-            <button>Submit</button>
-         </form> 
+      `);
+   } else {
+      divModal.innerHTML = (`
+      <div class="modal-content">
+         <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>${btnClicked}</h2>
+         </div>
+         <div class="modal-body">
+            <form id="amountForm">
+               <input type="text" id="amount" name="amount" placeholder="Amount"><br><br>
+               <button>Submit</button>
+            </form> 
+         </div>
+         <div class="modal-footer">
+            <h3>Modal Footer</h3>
+         </div>
       </div>
-      <div class="modal-footer">
-         <h3>Modal Footer</h3>
-      </div>
-   </div>
-   `);
+      `);
+   }
+
 
    root.appendChild(divModal);
 
