@@ -63,14 +63,14 @@ function getCustomerDashboard(jsonRes, email, password) {
             <h4>${jsonRes.accounts[i].currentAcc ? "Current" : "Saving"} account</h4>
          </header>
          <div>
-            <p>Account number: ${jsonRes.accounts[i].accountNumber}</p>
-            <p>Current balance: ${jsonRes.accounts[i].currentBalance}</p>
-            <p>Current transactions: ${jsonRes.transactions == null ? 0 : jsonRes.transactions.length}</p>
+            <p>Account number: <span class="account-number">${jsonRes.accounts[i].accountNumber}</span></p>
+            <p>Current balance: <span class="balance">${jsonRes.accounts[i].currentBalance}</span></p>
+            <p>Current transactions: <span class="transactions">${jsonRes.accounts[i].transactions == null ? 0 : jsonRes.accounts[i].transactions.length}</span></p>
          </div>
          <div>
             <button value="lodgement">Lodgement</button>
             <button value="withdrawal">Withdrawal</button>
-            <button value="transaction">Transaction</button>
+            <button value="transfer">Transfer</button>
             <button class="delete" value="delete">Delete</button>
          </div>
       `);
@@ -78,24 +78,68 @@ function getCustomerDashboard(jsonRes, email, password) {
       cardContainer.appendChild(bankCard);
    }
 
+
+
    let cardContainerClickEvent = cardContainer;
    cardContainerClickEvent.addEventListener("click", doSomething, false);
 
-   function doSomething(e){
-      if(e.target !== e.currentTarget){
-         let clickedItem = e.target.parentNode.parentNode.querySelector("div p");
-         console.log("Select:");
-         console.log(clickedItem);
+   function doSomething(e) {
+      if (e.target !== e.currentTarget) {
+         let selectAccountNumber = e.target.parentNode.parentNode.querySelector("div p span");
+         let accountNumber = selectAccountNumber.textContent;
+         let balance = e.target.parentNode.parentNode.querySelector("div .balance");
+         let transactions = e.target.parentNode.parentNode.querySelector("div .transactions");
+         let selectCard = e.target.parentNode.parentNode;
 
          let btnClicked = e.target.value;
-         console.log("What btn was clicked?");
-         console.log(btnClicked);         
+         console.log("Button clicked: ", btnClicked);
+
+
+         e.stopPropagation();
+
+         // Call modal        
+         switch (btnClicked) {
+            case "lodgement":
+            case "withdrawal":
+            case "transfer":
+               modal(btnClicked);
+               break;
+            case "delete":
+               deleteAccount(email, password, accountNumber, selectCard);
+               console.log("Call delete()");
+         }
+
+         if (btnClicked === "lodgement" || btnClicked === "withdrawal" || btnClicked === "transfer") {
+            const amountForm = document.querySelector("#amountForm");
+
+            amountForm.addEventListener("submit", function (e) {
+               e.preventDefault();
+               const modal = document.getElementById("myModal");
+               const amount = document.querySelector("#amount").value;
+               modal.remove();
+
+               console.log("Modal - amount: " + amount);
+
+               switch (btnClicked) {
+                  case "lodgement":
+                  case "withdrawal":
+                     // call fetch
+                     lodgeOrWithdrawal(btnClicked, email, password, accountNumber, amount, balance, transactions);
+                     break;
+                  case "transfer":
+                     // call fetch
+                     console.log("Call transfer()");
+                     break;
+               }
+            });
+         }
+
       }
    }
 
    root.appendChild(containerCreateAccountForm);
 
-   // Sening POST mehtod to craete a new account
+   // Sending POST mehtod to craete a new account
    const createAccountForm = document.querySelector("#createAccountForm");
    createAccountForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -104,7 +148,7 @@ function getCustomerDashboard(jsonRes, email, password) {
       const radioForm = document.getElementsByName("account");
 
       console.log(radioForm[0].value);
-      console.log(radioForm[1].value );
+      console.log(radioForm[1].value);
       fetch(`http://localhost:49000/api/customers/${email}/${password}/accounts`, {
          headers: {
             "Accept": "application/json",
@@ -113,7 +157,7 @@ function getCustomerDashboard(jsonRes, email, password) {
          method: 'POST',
          // TODO change the body based on form
          body: JSON.stringify({
-            "currentAcc": radioForm[0].checked ? true : false,
+            "currentAcc": radioForm[0].checked ? true : false, // without ternary?? .checked should return true or false therefore we do not have to use the ternary operator
             "currentBalance": 0.0,
             "savingAcc": radioForm[1].checked ? true : false,
             "sortCode": 112233
@@ -125,4 +169,36 @@ function getCustomerDashboard(jsonRes, email, password) {
 
       }));
    });
+}
+
+function lodgeOrWithdrawal(type, email, password, accountNumber, amount, balance, transactions) {
+   // /{accNum}/withdrawal/{amount}
+   fetch(`http://localhost:49000/api/customers/${email}/${password}/accounts/${accountNumber}/${type}/${amount}`, {
+      headers: {
+         "Accept": "application/json",
+         "Accept": "text/plain",
+         "Content-Type": "application/json"
+      },
+      method: "GET"
+   }).then(res => res.json().then(jsonRes => {
+      console.log(jsonRes);
+      console.log("Balaaance", balance);
+      balance.textContent = jsonRes;
+      console.log(transactions.textContent);
+      transactions.textContent++;
+   }));
+}
+
+function deleteAccount(email, password, accountNumber, selectCard) {
+   fetch(`http://localhost:49000/api/customers/${email}/${password}/accounts/${accountNumber}`, {
+      headers: {
+         "Accept": "application/json",
+         "Accept": "text/plain",
+         "Content-Type": "application/json"
+      },
+      method: "DELETE"
+   }).then(res => res.text().then(text => {
+      console.log(text);
+      selectCard.remove();
+   }));
 }

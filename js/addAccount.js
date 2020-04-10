@@ -15,15 +15,15 @@ function addAccount(jsonRes, cardContainer) {
          <h4>${jsonRes.currentAcc ? "Current" : "Saving"} account:</h4>
       </header>
       <div>
-         <p>Account number: ${jsonRes.accountNumber}</p>
-         <p>Current balance: ${jsonRes.currentBalance}</p>
-         <p>Transactions: ${jsonRes.transactions == null ? 0 : jsonRes.transactions.length}</p>
+         <p>Account number: <span class="account-number">${jsonRes.accountNumber}</span></p>
+         <p>Current balance: <span class="balance">${jsonRes.currentBalance}</span></p>
+         <p>Transactions: <span class="transactions">${jsonRes.transactions == null ? 0 : jsonRes.transactions.length}</span></p>
       </div>
       <div>
-         <button>Lodgement</button>
-         <button>Withdrawal</button>
-         <button>Payment</button>
-         <button class="delete">Delete</button>
+      <button value="lodgement">Lodgement</button>
+      <button value="withdrawal">Withdrawal</button>
+      <button value="transfer">Transfer</button>
+      <button class="delete" value="delete">Delete</button>
       </div>
    `);
 

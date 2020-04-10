@@ -8,7 +8,7 @@
    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="style.css" type="text/css">
    <title>Online Banking API</title>
-<style></style>
+   <style></style>
 </head>
 
 
@@ -29,22 +29,23 @@
    </div>
 
    <div id="container-signup" class="form-style-8">
-         <h2>Sign Up</h2>
-         <form method="POST" id="signUpForm">
-            <input type="text" id="signUpEmail" name="signUpEmail" placeholder="Email"><br><br>
-            <input type="text" id="password1" name="password1" placeholder="Password"><br><br>
-            <input type="text" id="password2" name="password2" placeholder="Password again"><br><br>
-            <input type="text" id="address" name="address" placeholder="Your address"><br><br>
-            <p id="incorrect-password" class="err-msg">Passwords do not match!</p>
-            <button>Sign Up</button>
-         </form>
-      </div>
+      <h2>Sign Up</h2>
+      <form method="POST" id="signUpForm">
+         <input type="text" id="signUpEmail" name="signUpEmail" placeholder="Email"><br><br>
+         <input type="text" id="password1" name="password1" placeholder="Password"><br><br>
+         <input type="text" id="password2" name="password2" placeholder="Password again"><br><br>
+         <input type="text" id="address" name="address" placeholder="Your address"><br><br>
+         <p id="incorrect-password" class="err-msg">Passwords do not match!</p>
+         <button>Sign Up</button>
+      </form>
+   </div>
 
    <div id="root"></div>
 
    <script>
       const root = document.querySelector("#root");
    </script>
+   <script src="./js/modal.js"></script>
    <script src="./js/signUp.js"></script>
    <script src="./js/verifyCustomerCredentials.js"></script>
    <script src="./js/customerDashboard.js"></script>
