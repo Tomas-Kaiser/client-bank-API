@@ -1,6 +1,4 @@
 function modal(btnClicked, jsonRes, clickedCardNum) {
-   console.log("Modal btn: ");
-   console.log(btnClicked);
 
    const divModal = document.createElement("div");
    divModal.setAttribute("id", "myModal");

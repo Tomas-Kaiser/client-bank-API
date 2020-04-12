@@ -138,7 +138,6 @@ function getCustomerDashboard(jsonRes, email, password) {
                   case "transfer":
                      // call fetch
                      transfer(btnClicked, email, password, accountNumber, accountReceiver, amount, balance, transactions);
-                     console.log("Call transfer()");
                      break;
                }
             });
