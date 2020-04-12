@@ -27,9 +27,11 @@ GET      /customers/{email}/{passowrd}/accounts{accNum}/transfer/{accNumReceiver
 
 
 Admin panel:
-8. Get all accounts
+8. Get all customers
+GET     /customers
 
-9. Get all transactions
+9. Check Balance
+GET      /customers/{email}/{passowrd}/accounts/{accNum}/balance
 
-10. Get a particular account 
-GET      /customers/{email}/{passowrd}/accounts{accNum}
+TODO
+10. Delete a customer 

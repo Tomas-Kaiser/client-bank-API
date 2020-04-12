@@ -6,7 +6,8 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-   <link rel="stylesheet" href="style.css" type="text/css">
+   <link rel="stylesheet" href="./css/style.css" type="text/css">
+   <link rel="stylesheet" href="./css/admin.css" type="text/css">
    <title>Online Banking API</title>
    <style></style>
 </head>
@@ -16,6 +17,12 @@
 <body>
    <header>
       <h1>Welcome to Online Banking</h1>
+      <nav>
+         <div style="text-align: center;">
+            <button id="adminBtn" onClick="admin()">Admin</button>
+            <button id="balanceBtn" onClick="balance()">Check Balance</button>
+         </div>
+      </nav>
    </header>
 
    <div id="container-login" class="form-style-8">
@@ -45,6 +52,8 @@
    <script>
       const root = document.querySelector("#root");
    </script>
+   <script src="./js/admin.js"></script>
+   <script src="./js/balance.js"></script>
    <script src="./js/modal.js"></script>
    <script src="./js/signUp.js"></script>
    <script src="./js/verifyCustomerCredentials.js"></script>
