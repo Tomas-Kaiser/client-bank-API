@@ -9,7 +9,6 @@ POST     /customers
 3. Get all accounts related to the particular customer (customer dashboard):
 GET      /customers/{email}/{passowrd}/accounts
 
-
 4. Create a new account:
 POST     /customers/{email}/{passowrd}/accounts
 
@@ -25,13 +24,11 @@ GET      /customers/{email}/{passowrd}/accounts{accNum}/lodgement/{amount}
 7. Transfer:
 GET      /customers/{email}/{passowrd}/accounts{accNum}/transfer/{accNumReceiver}/{amount}
 
-
-Admin panel:
 8. Get all customers
 GET     /customers
 
 9. Check Balance
 GET      /customers/{email}/{passowrd}/accounts/{accNum}/balance
 
-TODO
 10. Delete a customer 
+DELETE   /customers/{email}/{passowrd}

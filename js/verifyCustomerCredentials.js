@@ -27,11 +27,11 @@ loginForm.addEventListener("submit", function (e) {
       .then(res => res.json())
       .then(jsonRes => {
          if (errCredentials.style.display === "block") { errCredentials.style.display = "none"; }
+         document.querySelector("#balanceBtn").remove();
          document.querySelector("#container-login").remove();
          document.querySelector("#container-signup").remove();
          document.querySelector("h1").remove();
-         console.log(jsonRes);
-         console.log(jsonRes.accounts.length);
+         document.querySelector("#adminBtn").remove();
 
          getCustomerDashboard(jsonRes, email, password);
 

@@ -13,6 +13,7 @@ function getCustomerDashboard(jsonRes, email, password) {
    list.innerHTML = (`
       <li>Address: ${jsonRes.address}</li>
       <li>You have currently <span id="accountNumber">${jsonRes.accounts.length}</span> account${jsonRes.accounts.length === 1 ? "" : "s"} open</li>
+      <li><button id="deleteCustomerBtn">Delete whole account</button></li>
    `);
 
    const headerAccount = document.createElement("h3");
@@ -53,6 +54,26 @@ function getCustomerDashboard(jsonRes, email, password) {
 
    root.appendChild(divCardContainer);
    const cardContainer = document.querySelector("#card-container");
+
+   // Delete customer
+   const deleteCusBtn = document.querySelector("#deleteCustomerBtn");
+   deleteCusBtn.addEventListener("click", function (e) {
+      //   DELETE   /customers/{email}/{passowrd}
+      const url = `http://localhost:49000/api/customers/${email}/${password}`
+      fetch(url, {
+         headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+         },
+         method: 'DELETE'
+      }).then(res => res.text().then(text => {
+         console.log(text);
+         root.innerHTML = (`
+            <h3>Account has been deleted!</h3>
+         `);
+      }));
+   });
+
 
    let numOfTheBankCard = 0;
    for (let i = 0; i < jsonRes.accounts.length; i++) {
@@ -176,8 +197,8 @@ function getCustomerDashboard(jsonRes, email, password) {
          console.log(jsonRes);
          const accNum = document.querySelector("#accountNumber");
          accNum.textContent++;
-         
-  
+
+
          addAccount(jsonRes, cardContainer, numOfTheBankCard);
          numOfTheBankCard++;
       }));
