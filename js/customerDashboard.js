@@ -7,13 +7,14 @@ function getCustomerDashboard(jsonRes, email, password) {
 
    // Create a unorder list
    const list = document.createElement("ul");
+   list.setAttribute("class", "customerDetail");
    const h3 = document.createElement("h3");
    h3.textContent = "Your Details:";
 
    list.innerHTML = (`
       <li>Address: ${jsonRes.address}</li>
       <li>You have currently <span id="accountNumber">${jsonRes.accounts.length}</span> account${jsonRes.accounts.length === 1 ? "" : "s"} open</li>
-      <li><button id="deleteCustomerBtn">Delete whole account</button></li>
+      <li><button id="deleteCustomerBtn" class="delete">Delete whole account</button></li>
    `);
 
    const headerAccount = document.createElement("h3");

@@ -32,6 +32,7 @@ loginForm.addEventListener("submit", function (e) {
          document.querySelector("#container-signup").remove();
          document.querySelector("h1").remove();
          document.querySelector("#adminBtn").remove();
+         console.log(jsonRes);
 
          getCustomerDashboard(jsonRes, email, password);
 

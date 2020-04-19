@@ -114,6 +114,13 @@ button:hover {
 	text-align: center;
 }
 
+.customerDetail {
+	list-style-type: none;
+}
+
+.customerDetail li {
+	padding: 12px 0;
+}
 
 /*
 *
@@ -187,7 +194,7 @@ button:hover {
 /* Modal Header */
 .modal-header {
 	padding: 2px 16px;
-	background-color: #5cb85c;
+	background-color: #2CBBBB;
 	color: white;
  }
  
@@ -223,17 +230,25 @@ button:hover {
  
  /* The Close Button */
  .close {
-	color: #aaa;
+	color: black;
 	float: right;
+	margin: 14px;
 	font-size: 28px;
 	font-weight: bold;
  }
  
  .close:hover,
  .close:focus {
-	color: black;
+	color: rgb(102, 39, 39);
 	text-decoration: none;
 	cursor: pointer;
  }
 
- 
+ #amountForm {
+	 text-align: center;
+	 margin: 20px 0;
+ }
+
+ #amountForm input {
+	height: 23px;
+ }

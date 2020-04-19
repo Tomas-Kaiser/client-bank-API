@@ -14,12 +14,9 @@ function modal(btnClicked, jsonRes, clickedCardNum) {
          <div class="modal-body">
             <form id="amountForm">
                <input type="text" id="amount" name="amount" placeholder="Amount"><br><br>
-               <input type="text" id="accountReceiver" name="account" placeholder="Account number"><br><br>
+               <input type="text" id="accountReceiver" name="account" placeholder="Account number receiver"><br><br>
                <button>Submit</button>
             </form> 
-         </div>
-         <div class="modal-footer">
-            <h3>Modal Footer</h3>
          </div>
       </div>
       `);
@@ -32,7 +29,7 @@ function modal(btnClicked, jsonRes, clickedCardNum) {
       const divModalHeader = document.createElement("div");
       divModalHeader.setAttribute("class", "modal-header");
       divModalHeader.innerHTML = (`
-         <span class="close">X</span>
+         <span class="close">&times;</span>
          <h2>${btnClicked}</h2>
       `);
 
@@ -48,12 +45,12 @@ function modal(btnClicked, jsonRes, clickedCardNum) {
 
 
          divContentBody.innerHTML = (`
-         <p>Date: ${jsonRes.accounts[clickedCardNum].transactions[i].created}</p>
-         <p>Description: ${jsonRes.accounts[clickedCardNum].transactions[i].description}</p>
+         <p><b>Date:</b> ${jsonRes.accounts[clickedCardNum].transactions[i].created}</p>
+         <p><b>Description:</B> ${jsonRes.accounts[clickedCardNum].transactions[i].description}</p>
          <p>******************************</p>
       `);
 
-      divModalContent.appendChild(divContentBody);
+      divModalBody.appendChild(divContentBody);
       }
 
 
@@ -70,9 +67,6 @@ function modal(btnClicked, jsonRes, clickedCardNum) {
                <input type="text" id="amount" name="amount" placeholder="Amount"><br><br>
                <button>Submit</button>
             </form> 
-         </div>
-         <div class="modal-footer">
-            <h3>Modal Footer</h3>
          </div>
       </div>
       `);
